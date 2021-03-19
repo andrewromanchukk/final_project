@@ -28,7 +28,7 @@ jobs:
         - run:
             name: Edit source files for our environment
             command: |
-              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$BE_LB_HOSTNAME|g" \
+              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://3.127.27.172|g" \
               ./src/app/services/token-interceptor.service.ts
         # Lint the source code
         #- run:
