@@ -31,13 +31,13 @@ jobs:
               sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$BE_LB_HOSTNAME|g" \
               ./src/app/services/token-interceptor.service.ts
         # Lint the source code
-        #- run:
-          #  name: Linting
-          #  command: ng lint
+        - run:
+            name: Linting
+            command: ng lint
         # Test the source code
-        #- run:
-           # name: Testing
-            #command: ng test --watch=false --browsers ChromeHeadless
+        - run:
+            name: Testing
+            command: ng test --watch=false --browsers ChromeHeadless
         # Build production version of angular app
         - run:
             name: Build angular app
@@ -85,4 +85,4 @@ workflows:
           # Only deploy on the master branch
           filters:
             branches:
-              only: circleci-project-setup
+              only: master
