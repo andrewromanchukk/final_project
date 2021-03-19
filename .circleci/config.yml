@@ -63,7 +63,7 @@ jobs:
       steps:
         - add_ssh_keys:
             fingerprints:
-              - "b7:fd:ae:26:61:c9:e4:b6:36:6f:41:74:6a:f9:86:3c"
+              - "20:25:aa:93:a0:58:6d:e8:38:c8:90:f2:2d:5c:1f:2b"
         # Add our server to known_hosts
         - run:
             name: fix host authenticity for deploy server
@@ -72,7 +72,7 @@ jobs:
         - run:
             name: Deploy Over SSH
             command: >
-              ssh $SSH_USER@$SSH_HOST "python3 deploy_eschool/deploy.py --job $CIRCLE_PREVIOUS_BUILD_NUM --project fe --credentials credentials_eschool_prod.yaml"
+              scp -i -r * $SSH_USER@$SSH_HOST:~/fe
 workflows:
   version: 2
   build_and_deploy:
@@ -85,4 +85,4 @@ workflows:
           # Only deploy on the master branch
           filters:
             branches:
-              only: master
+              only: circleci-project-setup
