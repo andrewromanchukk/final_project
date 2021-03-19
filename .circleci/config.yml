@@ -35,9 +35,9 @@ jobs:
             name: Linting
             command: ng lint
         # Test the source code
-        - run:
-            name: Testing
-            command: ng test --watch=false --browsers ChromeHeadless
+        #- run:
+            #name: Testing
+            #command: ng test --watch=false --browsers ChromeHeadless
         # Build production version of angular app
         - run:
             name: Build angular app
