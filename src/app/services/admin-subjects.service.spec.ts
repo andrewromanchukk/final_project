@@ -14,7 +14,7 @@ describe('AdminSubjectsService', () => {
     })
   );
 
-  const subjects: Subject[] = [
+  const subjects: Subject [
     {
       subjectName: 'Математика',
       subjectDescription: 'Цариця наук',
