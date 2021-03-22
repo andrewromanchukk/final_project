@@ -33,7 +33,7 @@ jobs:
         # Lint the source code
         - run:
             name: Linting
-            command: ng lint -fix
+            command: ng tslint 
         # Test the source code
         #- run:
             #name: Testing
