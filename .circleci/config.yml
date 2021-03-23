@@ -30,10 +30,6 @@ jobs:
             command: |
               sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
               ./src/app/services/token-interceptor.service.ts
-        # Lint the source code
-        - run:
-            name: Linting
-            command: ng lint --fix
         # Test the source code
         - run:
             name: Testing
