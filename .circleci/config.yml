@@ -1,84 +1,20 @@
-version: 2
+version: 2.1
 
-jobs:
-    build:
-      working_directory: ~/eschool_fe
-      # Use prebuild docker container for node js
-      docker:
-        - image: circleci/node:10-browsers
-      steps:
-        # Checkout the code from the branch into the working_directory
-        - checkout
-        # Log the current branch
-        - run:
-            name: Show current branch
-            command: echo ${CIRCLE_BRANCH}
-        # Restore local dependencies from cache
-        - restore_cache:
-            keys:
-              - v1-dependencies-{{ checksum "package-lock.json" }}
-              - v1-dependencies-
-        # Install project dependencies
-        - run:
-            name: Install local dependencies
-            command: |
-              yarn install
-              npm install --prefix=$HOME/.local --global @angular/cli@7.0.3
-        # Replace servers
-        - run:
-            name: Edit source files for our environment
-            command: |
-              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
-              ./src/app/services/token-interceptor.service.ts
-        # Test the source code
-        - run:
-            name: Testing
-            command: ng test --watch=false --browsers ChromeHeadless
-        # Build production version of angular app
-        - run:
-            name: Build angular app
-            command: ng build --prod
-        # Gzip everything into one single artifact
-        - run:
-            name: Create artifacts
-            command: tar -czf "eschool_fe.tar.gz" -C ./dist/eSchool/ .
-        # Store the an artifact
-        - store_artifacts:
-            path: eschool_fe.tar.gz
-        # Cache local dependencies if they don't exist
-        - save_cache:
-            key: v1-dependencies-{{ checksum "package-lock.json" }}
-            paths:
-              - node_modules
+orbs:
+  aws-ecr: circleci/aws-ecr@6.7.0
+  aws-cli: circleci/aws-cli@2.0.0
 
-    deploy:
-      # Use simple container for deployment
-      docker:
-        - image: cimg/base:2020.01
-      resource_class: small
-      steps:
-        - add_ssh_keys:
-            fingerprints:
-              - "20:25:aa:93:a0:58:6d:e8:38:c8:90:f2:2d:5c:1f:2b"
-        # Add our server to known_hosts
-        - run:
-            name: fix host authenticity for deploy server
-            command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
-        # Run python script that deploys artifact to each BE server
-        - run:
-            name: Deploy Over SSH
-            command: |
-              ssh -oStrictHostKeyChecking=no $SSH_USER@$SSH_HOST "bash ./download_fe.sh"
 workflows:
-  version: 2
-  build_and_deploy:
+  build_and_push_image:
     jobs:
-      - build
-      - deploy:
-          # only deploy once build job has completed
-          requires:
-            - build
-          # Only deploy on the master branch
-          filters:
-            branches:
-              only: circleci-project-setup
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: Dockerfile
+          path: .
+          region: AWS_REGION
+          repo: circleci-ecr-orb-demo
+          tag: "$CIRCLE_SHA1"
+
