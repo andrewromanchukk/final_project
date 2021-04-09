@@ -19,7 +19,10 @@ jobs:
             name: Edit source files for our environment
             command: |
               sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
-              ./src/app/services/token-interceptor.service.ts     
+              ./src/app/services/token-interceptor.service.ts 
+        - run:
+            name: Install pip
+            command: pip install pipenv
         - run:
             name: Install AWS CLI
             command: pip install awscli --upgrade    
