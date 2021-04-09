@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.7.0
-  aws-cli: opensimsim/aws-cli@1.2.0
+  
 jobs:
     build:
       working_directory: ~/eschool_fe
