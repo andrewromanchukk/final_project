@@ -1,12 +1,31 @@
 version: 2.1
-
 orbs:
   aws-ecr: circleci/aws-ecr@6.7.0
   aws-cli: circleci/aws-cli@2.0.0
-
+jobs:
+    build:
+      working_directory: ~/eschool_fe
+      # Use prebuild docker container for node js
+      docker:
+        - image: circleci/node:10-browsers
+      steps:
+        # Checkout the code from the branch into the working_directory
+        - checkout
+        # Log the current branch
+        - run:
+            name: Show current branch
+            command: echo ${CIRCLE_BRANCH}
+        - run:
+            name: Edit source files for our environment
+            command: |
+              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
+              ./src/app/services/token-interceptor.service.ts          
 workflows:
-  build_and_push_image:
+  version: 2
+
+  build_and_deploy:
     jobs:
+      - build          
       - aws-ecr/build-and-push-image:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
@@ -15,6 +34,30 @@ workflows:
           dockerfile: Dockerfile
           path: .
           region: AWS_REGION
-          repo: circleci-ecr-orb-demo
-          tag: "$CIRCLE_SHA1"
+          repo: eschool_frontend
+          tag: "latest,v0.1.$CIRCLE_BUILD_NUM"
+          requires:
+            - build
+          # Only deploy on the master branch
+          filters:
+            branches:
+              only: circleci-project-setup
+
+# orbs:
+#   aws-ecr: circleci/aws-ecr@6.7.0
+#   aws-cli: circleci/aws-cli@2.0.0
+
+# workflows:
+#   build_and_push_image:
+#     jobs:
+#       - aws-ecr/build-and-push-image:
+#           account-url: AWS_ECR_ACCOUNT_URL
+#           aws-access-key-id: AWS_ACCESS_KEY_ID
+#           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+#           create-repo: true
+#           dockerfile: Dockerfile
+#           path: .
+#           region: AWS_REGION
+#           repo: eschool_backend
+#           tag: "$CIRCLE_BUILD_NUM"
 
