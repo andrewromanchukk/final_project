@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
-  
+  aws-cli: circleci/aws-cli@2.0.0
 jobs:
     build:
       working_directory: ~/eschool_fe
@@ -20,38 +20,6 @@ jobs:
             command: |
               sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
               ./src/app/services/token-interceptor.service.ts 
-        - run:
-            name: Install PIP
-            command: sudo apt-get install python-pip python-dev
-        - run:
-            name: Install awscli
-            command: sudo pip install awscli    
-   
-        - run:
-            name: Configure AWS Access Key ID
-            command: |
-              aws configure set aws_access_key_id \
-              $AWS_ACCESS_KEY_ID \
-              --profile default
-        - run:
-            name: Configure AWS Secret Access Key
-            command: |            
-              aws configure set aws_secret_access_key \
-              $AWS_SECRET_ACCESS_KEY \
-              --profile default
-
-        - run:
-            name: Configure AWS default region
-            command: |              
-                aws configure set region $AWS_DEFAULT_REGION \
-                --profile default
-              
-        - run:
-            name: Verify AWS config
-            command: |
-              echo $PATH
-              aws --version             
-              aws configure list --profile default
 workflows:
   version: 2
 
