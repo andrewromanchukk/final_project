@@ -21,11 +21,11 @@ jobs:
               sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
               ./src/app/services/token-interceptor.service.ts 
         - run:
-            name: Install pip
-            command: pip install pipenv
+            name: Install PIP
+            command: sudo apt-get install python-pip python-dev
         - run:
-            name: Install AWS CLI
-            command: pip install awscli --upgrade    
+            name: Install awscli
+            command: sudo pip install awscli    
    
         - run:
             name: Configure AWS Access Key ID
