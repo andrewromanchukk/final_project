@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.7.0
-  aws-cli: circleci/aws-cli@2.0.0
+  aws-cli: opensimsim/aws-cli@1.2.0
 jobs:
     build:
       working_directory: ~/eschool_fe
@@ -19,7 +19,8 @@ jobs:
             name: Edit source files for our environment
             command: |
               sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
-              ./src/app/services/token-interceptor.service.ts          
+              ./src/app/services/token-interceptor.service.ts     
+        
 workflows:
   version: 2
 
