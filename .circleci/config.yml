@@ -18,7 +18,7 @@ jobs:
         - run:
             name: Edit source files for our environment
             command: |
-              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://$LOAD_BALANCER|g" \
+              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://ggg.com|g" \
               ./src/app/services/token-interceptor.service.ts 
 workflows:
   version: 2
