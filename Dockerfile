@@ -1,6 +1,6 @@
 FROM node:8.11.2-alpine as node
 ARG BASEURL=DOCKER
-#ENV BASE_URL=$BASE_URL
+ENV BASEURL=$BASEURL
 WORKDIR /usr/src/app
 
 COPY package*.json ./
