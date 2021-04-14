@@ -12,7 +12,7 @@ jobs:
      - run: docker build -t t:v --build-arg ARG="http://$BASEURL" .
      - run:
         name: Create artifacts
-        command: tar -czf "eschool_fe.tar.gz" -C /usr/src/app/dist/eSchool/ .
+        command: tar -czf "eschool_fe.tar.gz" -C --from=node /usr/src/app/dist/eSchool/ .
         # Store the an artifact
      - store_artifacts:
           path: eschool_fe.tar.gz
