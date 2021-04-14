@@ -10,6 +10,12 @@ jobs:
 
      # build the application image
      - run: docker build -t t:v --build-arg ARG="http://$BASEURL" .
+     - run:
+        name: Create artifacts
+        command: tar -czf "eschool_fe.tar.gz" -C ./dist/eSchool/ .
+        # Store the an artifact
+     - store_artifacts:
+          path: eschool_fe.tar.gz
 workflows:
   version: 2
   build_and_deploy:
