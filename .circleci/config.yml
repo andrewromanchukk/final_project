@@ -21,7 +21,7 @@ jobs:
         - run:
             name: Edit source files for our environment
             command: |
-              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|$baseurl|g" \
+              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|$BASEURL|g" \
               ./src/app/services/token-interceptor.service.ts 
 workflows:
   version: 2
