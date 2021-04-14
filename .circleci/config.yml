@@ -1,65 +1,55 @@
-version: 2.1
-orbs:
-  aws-ecr: circleci/aws-ecr@6.15.3
-  aws-cli: circleci/aws-cli@2.0.0
+version: 2
 
 jobs:
-    build:
-      executor:
-        name: aws-ecr/default
-      # working_directory: ~/eschool_fe
-      # # Use prebuild docker container for node js
-      # docker:
-      #   - image: circleci/node:10-browsers
-      steps:
-        # Checkout the code from the branch into the working_directory
-        - checkout
-        # Log the current branch
-        - run:
-            name: Show current branch
-            command: echo ${CIRCLE_BRANCH}
-        - run:
-            name: Edit source files for our environment
-            command: |
-              sed -i -e "s|https://fierce-shore-32592.herokuapp.com|$BASEURL|g" \
-              ./src/app/services/token-interceptor.service.ts 
+  build:
+    working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/app.tar
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t t:v --build-arg ARG="http:$BASEURL" .
+
+    deploy:
+    name: Push application Docker image
+    command: |
+      if [ "$ {CIRCLE_BRANCH}" == "circleci-project-setup" ]; then
+        login="$(aws ecr get-login)"
+        ${login}
+        docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+        docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+      fi
 workflows:
   version: 2
-
   build_and_deploy:
     jobs:
-      - build          
-      - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          create-repo: true
-          dockerfile: Dockerfile
-          path: .
-          region: AWS_REGION
-          repo: eschool-frontend
-          tag: "latest,v0.1.$CIRCLE_BUILD_NUM"
+      - build
+      - deploy:
+          # only deploy once build job has completed
           requires:
             - build
           # Only deploy on the master branch
           filters:
             branches:
               only: circleci-project-setup
-# orbs:
-#   aws-ecr: circleci/aws-ecr@6.7.0
-#   aws-cli: circleci/aws-cli@2.0.0
-
-# workflows:
-#   build_and_push_image:
-#     jobs:
-#       - aws-ecr/build-and-push-image:
-#           account-url: AWS_ECR_ACCOUNT_URL
-#           aws-access-key-id: AWS_ACCESS_KEY_ID
-#           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-#           create-repo: true
-#           dockerfile: Dockerfile
-#           path: .
-#           region: AWS_REGION
-#           repo: eschool_backend
-#           tag: "$CIRCLE_BUILD_NUM"
-
