@@ -1,5 +1,6 @@
-FROM node:8.11.2-alpine as node
 ARG BUILDMODE='www'
+FROM node:8.11.2-alpine as node
+#ARG BUILDMODE='www'
 #ENV BUILDMODE=${BUILDMODE}
 RUN echo $BUILDMODE
 WORKDIR /usr/src/app
