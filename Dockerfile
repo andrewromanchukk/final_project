@@ -18,5 +18,5 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=node /usr/src/app/dist/eSchool .
 ARG BUILDMODE='www'
-RUN sed -i -e "s/fierce-shore-32592.herokuapp.com/${BUILDMODE}/g" /usr/share/nginx/html/main.js
+RUN sed -i -e "s|https://fierce-shore-32592.herokuapp.com|http://${BUILDMODE}|g" /usr/share/nginx/html/main.js
 RUN cat /usr/share/nginx/html/main.js
