@@ -17,7 +17,7 @@ data "terraform_remote_state" "alb" {
         key = "dev/alb/terraform.tfstate"
         region = "eu-west-1"
   }
-}
+}  //wwwwwwwwww
 #==============DATA==============
 
 terraform {
