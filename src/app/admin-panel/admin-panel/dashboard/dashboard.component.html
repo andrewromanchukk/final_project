@@ -1,0 +1,32 @@
+<div class="layout-dashboard">
+  <div class="p-grid">
+    <div class="p-col-12 p-lg-6 p-xl-3">
+      <div routerLink="students" class="overview-box students"><i class="overview-icon fa fa-graduation-cap"></i><span
+          class="overview-title">Учні</span><i class="overview-arrow pi pi-chevron-circle-up"></i>
+        <div [textContent]="students" class="overview-numbers"></div>
+        <div class="overview-subinfo"> Загальна кількість учнів </div>
+      </div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-xl-3">
+      <div routerLink="teachers" class="overview-box teachers"><i class="overview-icon fa fa-user"></i><span class="overview-title">Вчителі</span><i
+          class="overview-arrow pi pi-chevron-circle-up"></i>
+        <div [textContent]="teachers" class="overview-numbers"></div>
+        <div class="overview-subinfo"> Загальна кількість вчителів </div>
+      </div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-xl-3">
+      <div routerLink="groups" class="overview-box classes"><i class="overview-icon fa fa-users"></i><span class="overview-title">Класи</span><i
+          class="overview-arrow pi pi-chevron-circle-up"></i>
+        <div [textContent]="classes" class="overview-numbers"></div>
+        <div class="overview-subinfo"> Загальна кількість класів </div>
+      </div>
+    </div>
+    <div class="p-col-12 p-lg-6 p-xl-3">
+      <div routerLink="subjects" class="overview-box subjects"><i class="overview-icon fa fa-book"></i><span class="overview-title">Предмети</span><i
+          class="overview-arrow pi pi-chevron-circle-up"></i>
+        <div [textContent]="subjects" class="overview-numbers"></div>
+        <div class="overview-subinfo"> Загальна кількість предметів </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="groups-container">
+  <p-table [columns]="cols" [value]="activeGroups">
+    <ng-template pTemplate="caption">
+      Список класів
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+      <tr class="class-table-row">
+        <td *ngFor="let col of cols" class='rowData1'>
+          {{rowData[col.field] | transformStudyingYear}}
+          <button type="button" pButton icon="pi pi-pencil" *ngIf="col.field == 'classYear'" (click)="showDialog(rowData)"
+            class="ui-button-raised edit-class-button"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="add-button">
+        <button (click)="showDialog()" type="button" pButton icon="pi pi-plus" label="Додати клас"></button>
+      </div>
+    </ng-template>
+  </p-table>
+  <p-table [columns]="cols" [value]="inactiveGroups">
+    <ng-template pTemplate="caption">
+      <span> Список неактивних класів </span>
+      <div class="btn">
+        <button class="btn" (click)="showInactive = !showInactive">
+          <span *ngIf="showInactive">Сховати</span>
+          <span *ngIf="!showInactive">Показати</span>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr *ngIf="showInactive">
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr style="cursor:pointer" (click)="showDialog(rowData)" *ngIf="showInactive">
+        <td *ngFor="let col of columns" class='rowData1'>
+          {{rowData[col.field] | transformStudyingYear}}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<p-dialog header="Інформація про клас" [(visible)]="showEditDialog" showEffect="fade" [modal]="true" [responsive]="true"
+  [minWidth]="300">
+  <div class="p-grid p-dir-col p-justify-center">
+    <div class="p-col-12 requiredWrapper">
+      <div class="ui-inputgroup">        
+          <input id="className" type="text" placeholder="Назва класу *" [class.is-invalid]="className.invalid && className.touched" required
+          #className="ngModel" pInputText [(ngModel)]="editGroup.className" minlength="1" maxlength="7" 
+          pattern="^(([1-9]|1[0-9])[-][А-За-з]{1})|([1-9][(]([1-9]|1[0-9])[)][-][А-За-з]{1})|([1-9][(]([1-9]|1[0-9])[)])$"          
+          />
+        <span class="ui-inputgroup-addon" [class.wrongData1]="className.invalid && className.touched" [class.correctData1]="className.valid && className.touched"><i class="fas fa-pencil-alt"></i></span>
+      </div>
+      <span [class.d-none]="className.valid || className.untouched" class="requiredMessage">Некоректна назва класу</span>
+    </div>
+    <div class="p-col-12 requiredWrapper">
+      <div class="ui-inputgroup">
+        <input id="classYear" type="text" placeholder="Рік навчання *" [class.is-invalid]="classYear.invalid && classYear.touched" required
+          #classYear="ngModel" pInputText [(ngModel)]="editGroup.classYear" minlength="4" maxlength="4" 
+          pattern='^(20|29)\d{2}$'/>
+        <span class="ui-inputgroup-addon" [class.wrongData1]="classYear.invalid && classYear.touched" [class.correctData1]="classYear.valid && classYear.touched"><i class="fas fa-calendar-alt"></i></span>
+      </div>
+      <span [class.d-none]="classYear.valid || classYear.untouched" class="requiredMessage">Некоректна назва навчального року</span>
+    </div>
+    <div class="p-col-12 requiredWrapper">
+      <textarea id="classDescription" class="p-col-12" rows="5" cols="30" pInputTextarea [(ngModel)]="editGroup.classDescription"
+        placeholder="Додаткова інформація"></textarea>
+    </div>
+    <div class="p-col-12">
+      <p-radioButton name="isActivegroup" value="1" label="Активний" [(ngModel)]="editGroup.isActive"></p-radioButton>
+      <p-radioButton name="isActivegroup" value="0" label="Неактивний" [(ngModel)]="editGroup.isActive"></p-radioButton>
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="saveGroup()" [disabled]="classYear.invalid || className.invalid"
+      label="Зберегти"></button>
+  </p-footer>
+</p-dialog>

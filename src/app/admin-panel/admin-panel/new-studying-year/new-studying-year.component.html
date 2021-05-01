@@ -1,0 +1,41 @@
+<p-fieldset legend="Налаштування" [toggleable]="true" [collapsed]="true">
+  <p class="p-col-6 p-offset-3">Виберіть учбовий цикл навчання(наприклад одинадцятирічний)</p>
+  <p-spinner class="p-col-3" size="30" [(ngModel)]="studingCircle" [min]="1" [max]="20" placeholder [readonly]="true"></p-spinner>
+</p-fieldset>
+<p-table [value]="allGroupsList" [columns]="cols" [loading] ="loading">
+  <ng-template pTemplate="caption">Перехід на новий навчальний рік</ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="checkbox-class">
+        <p>Вибрати всі</p>
+        <p-checkbox [(ngModel)]="val" binary="true" (click)="setMainCheckbox(val)" [disabled]="checkboxDisabled">
+        </p-checkbox>
+      </th>
+      <th>Класи попереднього навчального року</th>
+      <th>Класи нового навчального року</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr *ngFor="let col of columns">
+      <td class="checkbox-class">               
+        <p-checkbox [(ngModel)]="rowData[col.checkboxField]" binary="true" (click)="setSubordinatedCheckbox(rowData[col.counterIdField])" [disabled]="checkboxDisabled">          
+        </p-checkbox>              
+      </td>
+      <td>
+        <div class="p-grid p-align-center">
+          <div class="p-col-6 p-offset-3" id="rowData1">{{rowData[col.classNameField]}} клас, 
+            {{rowData[col.classYearField] | transformStudyingYear}} рік</div>
+          <div class="p-col-1 p-align-center"><i class="{{rowData[col.iconStyleField]}}"></i></div>
+        </div>          
+      </td>      
+      <td><span *ngIf="hideTag" [style.color]="rowData[col.colorStyleField]">{{rowData[col.newClassNameField]}} клас у 
+        {{rowData[col.newClassYearField] | transformStudyingYear}} році </span></td>      
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="add-button-style">
+      <button type="button" pButton icon="pi pi-plus" label="Перейти на новий навчальний рік" (click)="transitionToTheNewStudingYear()" [disabled]="disableButtonCreateTransition">        
+      </button>
+    </div>
+  </ng-template>
+</p-table>

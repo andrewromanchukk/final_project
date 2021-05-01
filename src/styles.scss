@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media print {
+  button,
+  .sidenav,
+  .ui-toolbar,
+  .ui-table-summary,
+  fieldset,
+  .caption__wrap {
+    display: none !important;
+  }
+}

@@ -1,0 +1,135 @@
+<div class="container">
+  <div class="title">
+    <span>
+      <h2 class="stat">Статистика <i class="fas fa-chart-line"></i></h2>
+    </span>
+  </div>
+
+  <div class="flex-container">
+    <p-card class="data">
+      <p-dropdown
+        [options]="years"
+        placeholder="Виберіть рік"
+        [(ngModel)]="selectedYear"
+        (onChange)="onYearChange()"
+        [showClear]="true"
+      ></p-dropdown>
+
+      <p-calendar
+        class="calendar"
+        [(ngModel)]="start"
+        [locale]="ua"
+        placeholder="Початок періоду"
+        dateFormat="yy.mm.dd"
+        [showIcon]="true"
+      ></p-calendar>
+
+      <p-calendar
+        class="calendar"
+        [(ngModel)]="end"
+        [locale]="ua"
+        dateFormat="yy.mm.dd"
+        placeholder="Кінець періоду"
+        [showIcon]="true"
+        [defaultDate]="defaultDate"
+      ></p-calendar>
+      <div class="radio">
+        <p-radioButton
+          label="Успішність класів по предмету"
+          name="chartGroup"
+          value="class-subject"
+          [(ngModel)]="selectedChartsType"
+          (onClick)="onDataReset()"
+        ></p-radioButton>
+        <p-radioButton
+          label="Успішність класів"
+          name="chartGroup"
+          value="class"
+          [(ngModel)]="selectedChartsType"
+          (onClick)="onDataReset()"
+        ></p-radioButton>
+        <p-radioButton
+          label="Успішність учнів"
+          name="chartGroup"
+          value="student"
+          [(ngModel)]="selectedChartsType"
+          (onClick)="onDataReset()"
+        ></p-radioButton>
+
+        <p-multiSelect
+          class="group"
+          *ngIf="
+            (selectedYear && selectedChartsType === 'class') ||
+            (selectedYear && selectedChartsType === 'class-subject')
+          "
+          [options]="visibleGroups"
+          [(ngModel)]="selectedGroups"
+          (onChange)="onClassChange($event)"
+          optionLabel="className"
+          [panelStyle]="{ minWidth: '15em' }"
+          defaultLabel="Виберіть клас"
+          selectedItemsLabel="Вибрано {0} класів"
+        ></p-multiSelect>
+
+        <p-dropdown
+          class="group"
+          *ngIf="selectedYear && selectedChartsType === 'student'"
+          [options]="visibleGroups"
+          [(ngModel)]="selectedGroup"
+          (onChange)="onClassChange($event)"
+          placeholder="Виберіть клас"
+          optionLabel="className"
+          [showClear]="true"
+        ></p-dropdown>
+
+        <p-dropdown
+          class="subject"
+          *ngIf="
+            selectedGroup ||
+            (selectedChartsType === 'class-subject' && selectedGroups)
+          "
+          [options]="visibleSubjects"
+          [(ngModel)]="selectedSubjects"
+          (onChange)="onSubjectChange()"
+          placeholder="Виберіть предмет"
+          [showClear]="true"
+        ></p-dropdown>
+
+        <p-multiSelect
+          class="student"
+          *ngIf="selectedGroup && selectedChartsType === 'student'"
+          [options]="visibleStudents"
+          [(ngModel)]="selectedStudents"
+          (onChange)="onStudentChange($event)"
+          [panelStyle]="{ minWidth: '13em' }"
+          defaultLabel="Виберіть учня"
+          selectedItemsLabel="Вибрано {0} учнів "
+        ></p-multiSelect>
+
+        <p-button
+          class="showData"
+          icon="pi pi-check"
+          [disabled]="isButtonDisabled"
+          (onClick)="onClickShow()"
+          label="Показати оцінки"
+        ></p-button>
+      </div>
+    </p-card>
+    <p-card class="chart">
+      <h3 class="averageMark">
+        Середня оцінка учня по предмету: {{ average | number: '.1-2' }}
+      </h3>
+
+      <h3 class="averageMark">
+        Середня оцінка учня по всіх предметах:
+        {{ avgMarkAllSubjects | number: '.1-2' }}
+      </h3>
+      <p-chart
+        type="bar"
+        height="350px"
+        [data]="chartMarks"
+        [options]="chartOptions"
+      ></p-chart>
+    </p-card>
+  </div>
+</div>

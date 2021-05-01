@@ -1,0 +1,313 @@
+%ellipsis-shared {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+%ellipsis-after {
+  overflow: visible;
+  text-overflow: inherit;
+  background: #fff;
+  position: absolute;
+  left: auto;
+  top: auto;
+  width: auto;
+  max-width: 20rem;
+  border: 1px solid #eaebec;
+  padding: 0 0.5rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
+  white-space: normal;
+  word-wrap: break-word;
+  display: block;
+  color: black;
+  margin-top: -1.25rem;
+}
+
+.weekSchedule {
+  margin-top: 70px;
+  margin-left: 1%;
+
+  .central {
+    text-align: center;
+    position: relative;
+    label {
+      font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+  }
+  .left {
+    margin-left: 0.1em;
+  }
+  .right {
+    padding-left: 13%;
+    button {
+      margin-left: 3%;
+    }
+  }
+}
+
+.students-table-row {
+  height: 48px;
+  text-align: center;
+  td {
+    text-align: center;
+    padding-right: 4%;
+    position: relative;
+    .download {
+      position: absolute;
+      top: calc((100% - 14px) / 2);
+      right: 8px;
+      font-size: 20px;
+    }
+  }
+}
+
+.student-ellipsis-table-cell {
+  @extend %ellipsis-shared;
+  &:hover,
+  &:focus {
+    color: transparent;
+    &:after {
+      content: attr(data-homework);
+      @extend %ellipsis-after;
+    }
+  }
+}
+
+.note-ellipsis-table-cell {
+  @extend %ellipsis-shared;
+  &:hover,
+  &:focus {
+    color: transparent;
+    &:after {
+      content: attr(data-note);
+      @extend %ellipsis-after;
+    }
+  }
+}
+
+.lesson-number {
+  width: 10%;
+  text-align: center !important;
+}
+
+.lesson-name {
+  width: auto;
+}
+
+.lesson-description {
+  width: auto;
+}
+
+.lesson-mark {
+  width: 10%;
+}
+
+.student-print-icon {
+  font-size: 26px;
+  position: relative;
+  top: 4px;
+  left: 6%;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.ordering:nth-of-type(1) {
+  order: 1;
+}
+
+.ordering:nth-of-type(2) {
+  order: 3;
+}
+
+.ordering:nth-of-type(3) {
+  order: 5;
+}
+
+.ordering:nth-of-type(4) {
+  order: 2;
+}
+
+.ordering:nth-of-type(5) {
+  order: 4;
+}
+
+.ordering:nth-of-type(6) {
+  order: 6;
+}
+
+// Styles for print page
+@media print {
+  .schedule-navigation {
+    display: none;
+  }
+  .students-table-row {
+    height: 24px;
+    td {
+      text-align: unset;
+      position: static;
+      .download {
+        display: none;
+      }
+    }
+  }
+  .tables {
+    .ordering:nth-of-type(1) {
+      order: 1;
+    }
+
+    .ordering:nth-of-type(2) {
+      order: 3;
+    }
+
+    .ordering:nth-of-type(3) {
+      order: 5;
+    }
+
+    .ordering:nth-of-type(4) {
+      order: 2;
+    }
+
+    .ordering:nth-of-type(5) {
+      order: 4;
+    }
+
+    .ordering:nth-of-type(6) {
+      order: 6;
+    }
+    margin-top: -80px;
+    .p-col-12 {
+      width: 50%;
+    }
+  }
+}
+
+// Responsive styles
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 992px to 1280px
+*/
+
+@media (min-width: 992px) and (max-width: 1280px) {
+  .schedule-navigation {
+    div:nth-child(2) {
+      label {
+        margin-left: 10%;
+      }
+    }
+  }
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 992px
+*/
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .weekSchedule .right {
+    padding: 0%;
+  }
+  .right button {
+    display: none;
+  }
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .central {
+    display: flex;
+    justify-content: center;
+    div:nth-of-type(1) {
+      order: 2;
+    }
+
+    div:nth-of-type(2) {
+      order: 1;
+    }
+
+    div:nth-of-type(3) {
+      order: 3;
+    }
+  }
+  .left,
+  .right {
+    display: none;
+  }
+  .ordering:nth-of-type(1) {
+    order: 1;
+  }
+
+  .ordering:nth-of-type(2) {
+    order: 2;
+  }
+
+  .ordering:nth-of-type(3) {
+    order: 3;
+  }
+
+  .ordering:nth-of-type(4) {
+    order: 4;
+  }
+
+  .ordering:nth-of-type(5) {
+    order: 5;
+  }
+
+  .ordering:nth-of-type(6) {
+    order: 6;
+  }
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (max-width: 480px) {
+  .left,
+  .right {
+    display: none;
+  }
+  .central {
+    display: flex;
+    justify-content: center;
+    div:nth-of-type(1) {
+      order: 2;
+    }
+
+    div:nth-of-type(2) {
+      order: 1;
+    }
+
+    div:nth-of-type(3) {
+      order: 3;
+    }
+  }
+  .ordering:nth-of-type(1) {
+    order: 1;
+  }
+
+  .ordering:nth-of-type(2) {
+    order: 2;
+  }
+
+  .ordering:nth-of-type(3) {
+    order: 3;
+  }
+
+  .ordering:nth-of-type(4) {
+    order: 4;
+  }
+
+  .ordering:nth-of-type(5) {
+    order: 5;
+  }
+
+  .ordering:nth-of-type(6) {
+    order: 6;
+  }
+}

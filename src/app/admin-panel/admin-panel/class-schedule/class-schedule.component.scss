@@ -1,0 +1,113 @@
+// container for classes and calendars
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+// select class
+.classes {
+  margin-top: 3%;
+  margin-left: 20%;
+  width: 150px;
+}
+
+// calendar 'from date'
+.calendar-group-left {
+  margin-top: 3%;
+  margin-left: 3.5%;
+}
+
+// calendar 'to date'
+.calendar-group-right {
+  margin-top: 3%;
+  margin-left: 7%;
+}
+
+// header of form
+.ui-helper-clearfix {
+  width: 100%;
+  height: 39px;
+  background-color: #f4f4f4;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border: 1px solid #c8c8c8;
+}
+
+// heading of form
+.ui-panel-title {
+  color: black;
+  font-weight: bold;
+  margin-left: 45%;
+  margin-top: 9px;
+  display: inline-block;
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+}
+
+.left-panel {
+  float: left;
+  width: 46%;
+  margin-left: 3%;
+  margin-top: 2%;
+  clear: both;
+}
+
+.right-panel {
+  float: right;
+  width: 46%;
+  margin-right: 3%;
+  margin-top: 2%;
+}
+
+// fieldset for days
+p-fieldset {
+  display: block;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+// heading of week days
+:host ::ng-deep .ui-fieldset-legend {
+  text-align: center;
+}
+
+// submit button
+p-footer button {
+  width: 140px;
+  height: 38px;
+  margin-top: 2%;
+  clear: both;
+  float: left;
+  margin-left: 3%;
+  margin-bottom: 5%;
+}
+
+:host ::ng-deep p-footer button .ui-button-icon-left {
+  margin-left: 17px;
+}
+
+// date validation
+.date-alert {
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  padding-top: 3px;
+  padding-left: 2px;
+  color: red;
+}
+
+// working days validation
+.schedule-alert {
+  font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+// calendar width
+:host ::ng-deep .ui-calendar-w-btn input {
+  width: 185px;
+}
+
+@media screen and (max-width: 400px) {
+  
+}

@@ -1,0 +1,37 @@
+p-dropdown {
+  margin: 7px 20px 7px 0;
+}
+:host {
+  ::ng-deep .ui-dropdown {
+    min-width: 200px;
+  }
+  ::ng-deep .ui-toolbar {
+    position: inherit;
+    margin-top: 60px;
+    .ui-button {
+      margin: unset;
+      width: unset;
+    }
+  }
+}
+.selected-year {
+  margin: 0 20px 20px 0;
+  font-weight: 900;
+}
+
+.journal-menu {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.progress {
+  float: right;
+  margin-right: 10px;
+  margin-top: 7px;
+}
+
+@media screen and (max-width: 1020px) {
+  .progress {
+    float: left;
+  }
+}

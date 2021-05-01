@@ -1,0 +1,127 @@
+::ng-deep .groups-container {
+  margin: 10px 0px;
+  width: 150px;
+  height: 40px;
+  font-size: 15px;
+}
+
+::ng-deep body .ui-button.ui-state-default.ui-button-success {
+
+  &:enabled:active,
+  &:enabled:hover {
+    background-color: blue;
+  }
+
+  background-color: blue;
+}
+
+.groups-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.btn {
+  float: right;
+}
+
+:host ::ng-deep .ui-table .ui-table-tbody {
+  background: rgb(194, 192, 190);
+}
+
+div.pointer {
+  pointer-events: auto;
+}
+
+$required: red;
+
+span.ui-button-text,
+.ui-clickable {
+  padding: 0px !important;
+}
+
+.requiredMessage {
+  position: absolute;
+  right: 4%;
+  bottom: -19%;
+  color: $required;
+  font-size: 11px;
+}
+
+.d-none {
+  display: none;
+}
+
+.requiredWrapper {
+  position: relative;
+  margin-top: 15px;
+}
+
+.is-invalid {
+  border-color: $required;
+}
+
+.class-table-row {
+  .edit-class-button {
+    visibility: hidden;
+    float: right;
+    margin-right: 1em;
+  }
+
+  &:hover .edit-class-button {
+    visibility: visible;
+  }
+}
+.ui-inputgroup
+{
+  display: flex;
+  flex-direction: row-reverse;
+}
+.ui-inputgroup-addon
+{
+  border-radius: 3px;
+  -webkit-transition: all .7s ease;
+  -moz-transition: all .7s ease;
+  -o-transition: all .7s ease;
+  transition: all .7s ease;
+  margin-right: 5px;
+}
+#className,
+#classYear
+{
+  width: 100%;
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #c0c0c0 !important;
+}
+#className:hover,
+#classYear:hover
+{
+  border-bottom-color: #000000 !important;
+}
+#className:focus + .ui-inputgroup-addon,
+#classYear:focus + .ui-inputgroup-addon
+{
+  background-color: #007ad9 !important;
+  color: white !important;
+  border-color: #007ad9 !important;
+}
+.wrongData1
+{
+  background-color: #ff0000 !important;
+  color: white !important;
+  border-color: #ff0000 !important;
+}
+.correctData1
+{
+  background-color: #00aa00 !important;
+  color: white !important;
+  border-color: #00aa00 !important;
+}
+.rowData1{
+  text-align: center;
+}
+
+.add-button{
+  text-align: left;
+  margin-left: 10px;
+}

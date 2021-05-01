@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15.3
+  aws-cli: circleci/aws-cli@2.0.0
+jobs:
+  plan-apply:
+    working_directory: /tmp/project
+    docker:
+      - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
+    steps:
+      - checkout
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform init 
+            terraform plan
+             terraform taint aws_launch_configuration.as_frontend
+             terraform taint aws_autoscaling_group.asg_frontend
+             terraform apply -auto-approve 
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+          
+workflows:
+    build_and_push image:
+      jobs:         
+        - aws-ecr/build-and-push-image:
+            account-url: AWS_ECR_ACCOUNT_URL
+            extra-build-args: "--build-arg BUILDMODE=$BASEURL"
+            aws-access-key-id: AWS_ACCESS_KEY_ID
+            aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+            create-repo: true
+            dockerfile: Dockerfile
+            path: .
+            region: AWS_REGION
+            repo: eschool-frontend
+            tag: "latest,v0.1.$CIRCLE_BUILD_NUM"  
+        - plan-apply:
+            requires:
+            - aws-ecr/build-and-push-image
+            filters:
+              branches:
+                only: master
+          

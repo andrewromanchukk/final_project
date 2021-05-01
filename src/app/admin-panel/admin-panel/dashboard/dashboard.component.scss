@@ -1,0 +1,105 @@
+.layout-dashboard {
+  padding: 20px;
+}
+
+.overview-box {
+  padding: 16px;
+  min-height: 115px;
+  color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(192, 144, 144, 0.12);
+
+  &:hover {
+    box-shadow: 0 1px 3px rgba(192, 144, 144, 0.42);
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .overview-icon {
+    font-size: 48px;
+    float: right;
+  }
+
+  .overview-title {
+    margin-bottom: 8px;
+    display: inline-block;
+    font-size: 18px;
+  }
+
+  .overview-arrow {
+    color: #ffffff;
+    margin-left: 8px;
+    font-size: 16px;
+  }
+
+  .overview-numbers {
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+
+  .overview-subinfo {
+    font-size: 13px;
+    border-left: 4px solid;
+    margin-left: -16px;
+    padding-left: 12px;
+  }
+
+}
+
+.students {
+  background-color: #42A5F5;
+
+  .overview-icon {
+    color: #BBDEFB;
+  }
+
+  .overview-subinfo {
+    border-color: #BBDEFB;
+    color: #BBDEFB;
+  }
+}
+
+.teachers {
+  background-color: #7E57C2;
+
+  .overview-icon {
+    color: #D1C4E9;
+  }
+
+  .overview-subinfo {
+    border-color: #D1C4E9;
+    color: #D1C4E9;
+  }
+}
+
+.classes {
+  background-color: #FFB300;
+
+  .overview-icon {
+    color: #FFECB3;
+  }
+
+  .overview-subinfo {
+    border-color: #FFECB3;
+    color: #FFECB3;
+  }
+}
+
+.subjects {
+  background-color: #66BB6A;
+
+  .overview-icon {
+    color: #FFF8E1;
+  }
+
+  .overview-subinfo {
+    border-color: #FFF8E1;
+    color: #FFF8E1;
+  }
+}

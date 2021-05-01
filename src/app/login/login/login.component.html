@@ -1,0 +1,58 @@
+<div class="picture">
+  <div class="grayBox">
+    <header>
+      <div class="container" (keyup.enter)="Login()">
+        <h1>Вхід до системи</h1>
+
+        <h3>Ім'я </h3>
+        <div class="ui-inputgroup">
+          <input
+            pInputText
+            [(ngModel)]="userName"
+            autofocus
+            type="text"
+            placeholder="Введіть ім'я користувача"
+            class="login-input"
+            name="userName"
+          />
+          <span class="ui-inputgroup-addon"><i class="fas fa-key"></i></span>
+        </div>
+
+        <h3>Пароль</h3>
+        <div class="ui-inputgroup">
+          <input
+            pInputText
+            [(ngModel)]="password"
+            type="password"
+            placeholder="Введіть пароль"
+            class="login-input"
+            name="password"
+          />
+          <span class="ui-inputgroup-addon"><i class="fas fa-lock"></i></span>
+        </div>
+        <span class="login-error">{{ errorMessage }}</span>
+        <button
+          pButton
+          type="button"
+          label="Вхід"
+          (click)="Login()"
+          class="ui-button"
+        ></button>
+        <a routerLink="request-password">Забули пароль?</a>
+      </div>
+
+      <div class="pageTitle">
+        ІФ ПНВК<br /><br />
+        <span class="schoolName"
+          >"Католицька ЗШ ІІ-ІІІ ст. - гімназія<br />
+          св. Василія Великого"</span
+        ><br /><br />
+        <div class="pageSubTitle">
+          E-Progress<br />
+          (журнал успішності учнів)
+        </div>
+        <img src="/assets/schoolLogo.png" alt="Логотип" />
+      </div>
+    </header>
+  </div>
+</div>

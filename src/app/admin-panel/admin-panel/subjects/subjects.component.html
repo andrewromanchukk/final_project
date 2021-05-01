@@ -1,0 +1,67 @@
+<div class="progress-box">
+  <p-progressBar class="p-progress-bar" mode="indeterminate" [style]="{'height': '6px'}"
+                 [hidden]="!loading"></p-progressBar>
+</div>
+<p-table [columns]="cols" [value]="subjects" [(selection)]="selectedSubject" [responsive]="true">
+  <ng-template pTemplate="caption"> Предмети </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr class="subjects-table-row" [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns" class="subjects-table-cell">
+        {{ rowData[col.field] }}
+        <button class="subjects-custom-button" *ngIf="col.field == 'subjectDescription'" pButton type="button" (click)="onRowSelect(rowData)"
+          icon="pi pi-pencil" iconPos="left"></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd($event)" label="Додати предмет"></button>
+    </div>
+  </ng-template>
+</p-table>
+
+<p-dialog header="Предмет" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [minWidth]="300">
+  <form [formGroup]="subjectForm" class="subjectsForm" (ngSubmit)="onSubmit()">
+    <div class="p-grid p-dir-col" *ngIf="subject">
+      <div class="p-col-12 marginWrapper">
+        <div class="ui-inputgroup">
+          <input pInputText id="name" placeholder="Назва предмету *" (change)="subject.subjectName = $event.target.value" [value]="subject.subjectName || '' "
+            formControlName="subjectName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subjectName.errors }" />
+          <span class="ui-inputgroup-addon"><i class="fas fa-pencil-alt"></i></span>
+        </div>
+        <div *ngIf="submitted && f.subjectName.errors" class="requiredMessage">
+          <div *ngIf="f.subjectName.errors.required">Назва предмета є обов'язковою *</div>
+          <div *ngIf="f.subjectName.errors.minlength">Кількість символів має бути більше 3 *</div>
+          <div *ngIf="f.subjectName.errors.maxlength">Кількість символів має бути менше 100 *</div>
+          <div *ngIf="f.subjectName.errors.pattern">Поле має починатись із великої літери та повинен використовуватись
+            український алфавіт! *</div>
+        </div>
+      </div>
+      <div class="p-col-12 marginWrapper">
+        <textarea [rows]="5" [cols]="30" id="description" placeholder="Опис предмету" (change)="subject.subjectDescription = $event.target.value"
+          [value]="subject.subjectDescription || '' " pInputTextarea formControlName="subjectDescription" class="form-control p-col-12"
+          [ngClass]="{ 'is-invalid': submitted && f.subjectDescription.errors }"></textarea>
+        <div *ngIf="submitted && f.subjectDescription.errors" class="requiredMessage">
+          <div *ngIf="f.subjectDescription.errors.minlength">Кількість символів має бути більше 3 *</div>
+          <div *ngIf="f.subjectDescription.errors.maxlength">Кількість символів має бути не більше 300 *</div>
+          <div *ngIf="f.subjectDescription.errors.pattern">Повинен використовуватись український алфавіт! *</div>
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <div class="p-grid p-dir-col p-align-end">
+        <div class="p-col">
+          <button type="submit" pButton icon="pi pi-check" label="Зберегти"></button>
+        </div>
+      </div>
+    </p-footer>
+  </form>
+</p-dialog>

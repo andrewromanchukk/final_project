@@ -1,0 +1,117 @@
+<form class="form" #form="ngForm">
+  <p-header>
+    <div class="ui-helper-clearfix">
+      <span class="ui-panel-title">Розклад уроків</span>
+    </div>
+  </p-header>
+
+  <div class="flex-container">
+    <div class="form-control classes">
+      <p-dropdown
+        name="class"
+        [options]="classes"
+        [(ngModel)]="selectedClass"
+        (onChange)="onClassSelected($event)"
+        placeholder="Виберіть клас"
+        #class="ngModel"
+        required
+      >
+      </p-dropdown>
+    </div>
+
+    <div class="form-group calendar-group-left">
+      <p-calendar
+        class="form-control"
+        [(ngModel)]="schedule.startOfSemester"
+        [minDate]="minDateValue"
+        [maxDate]="maxDateValue"
+        [placeholder]="'Дата початку семестру'"
+        [locale]="ua"
+        dateFormat="dd.mm.yy"
+        [showIcon]="true"
+        name="fromDate"
+        #fromDate="ngModel"
+        required
+      ></p-calendar>
+    </div>
+
+    <div class="form-group calendar-group-right">
+      <p-calendar
+        class="form-control"
+        [(ngModel)]="schedule.endOfSemester"
+        [minDate]="minDateValue"
+        [maxDate]="maxDateValue"
+        [placeholder]="'Дата закінчення семестру'"
+        [locale]="ua"
+        dateFormat="dd.mm.yy"
+        [showIcon]="true"
+        name="toDate"
+        #toDate="ngModel"
+        required
+      ></p-calendar>
+      <div
+        [hidden]="
+          fromDate.invalid || toDate.invalid || toDate.value > fromDate.value
+        "
+        class="date-alert alert-danger"
+      >
+        Дата закінчення повинна бути більшою <br />за дату початку семестру
+      </div>
+    </div>
+  </div>
+
+  <div class="left-panel">
+    <p-fieldset class="form-control day" legend="Понеділок">
+      <app-day [daySubjectsList]="schedule.mondaySubjects"></app-day>
+    </p-fieldset>
+
+    <p-fieldset class="form-control day" legend="Вівторок">
+      <app-day [daySubjectsList]="schedule.tuesdaySubjects"></app-day>
+    </p-fieldset>
+
+    <p-fieldset class="form-control day" legend="Середа">
+      <app-day [daySubjectsList]="schedule.wednesdaySubjects"></app-day>
+    </p-fieldset>
+  </div>
+
+  <div class="right-panel">
+    <p-fieldset class="form-control day" legend="Четвер">
+      <app-day [daySubjectsList]="schedule.thursdaySubjects"></app-day>
+    </p-fieldset>
+
+    <p-fieldset class="form-control day" legend="П'ятниця">
+      <app-day [daySubjectsList]="schedule.fridaySubjects"></app-day>
+    </p-fieldset>
+
+    <p-fieldset
+      class="form-control day"
+      legend="Субота"
+      [toggleable]="true"
+      [collapsed]="true"
+    >
+      <app-day [daySubjectsList]="schedule.saturdaySubjects"></app-day>
+    </p-fieldset>
+  </div>
+
+  <p-footer>
+    <button
+      pButton
+      class="submit-button"
+      type="submit"
+      pButton
+      icon="pi pi-check"
+      (click)="submitForm(form)"
+      label="Зберегти"
+      [disabled]="
+        class.invalid ||
+        fromDate.invalid ||
+        toDate.invalid ||
+        schedule.mondaySubjects.length < 2 ||
+        schedule.tuesdaySubjects.length < 2 ||
+        schedule.wednesdaySubjects.length < 2 ||
+        schedule.thursdaySubjects.length < 2 ||
+        schedule.fridaySubjects.length < 2
+      "
+    ></button>
+  </p-footer>
+</form>

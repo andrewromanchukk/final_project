@@ -1,0 +1,62 @@
+.aligner{
+  display: flex;
+  justify-content: center;
+}
+
+tr, td{
+  text-align: center;
+}
+
+.add-button-style{
+  text-align: left;
+  margin-left: 20px;
+}
+
+span{
+  color:#6ed65e; 
+  font-weight: bolder;
+}
+
+.checkbox-class{
+  width: 15%;
+}
+
+p{
+  margin: 10px;
+}
+
+.pi-exclamation-triangle{
+  color: #f0bb43;
+}
+
+.pi-times-circle{
+  color: #df0044;
+}
+
+.pi-minus-circle{
+  color: #df0044;
+}
+
+.pi-check-circle{
+  color: #43b917;
+}
+
+.p-grid #rowData1{  
+  margin-top: 7px;
+}
+
+div.p-col-1{
+  width: 20px;
+  height: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .checkbox-class p{
+      display: none;
+    }
+    .p-grid #rowData1{  
+      margin-top: 7px;
+      margin-left: 10px;
+      width: 70%;
+    }     
+  }

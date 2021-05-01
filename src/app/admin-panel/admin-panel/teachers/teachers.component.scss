@@ -1,0 +1,176 @@
+$required: #ff0000;
+span.ui-button-text,
+.ui-clickable {
+  padding: 0px !important;
+}
+::ng-deep .ui-state-highlight {
+  background-color: #f9f9f9 !important;
+  color: black !important;
+}
+.ui-g-12 {
+  padding: 0px !important;
+}
+.is-invalid {
+  border-color: $required;
+}
+.d-none {
+  display: none;
+}
+.mainInfo {
+  margin-top: 2px;
+}
+.requiredMessage {
+  float: right;
+  color: $required;
+  font-size: 11px;
+}
+.teacher__cell {
+  line-height: 2.3;
+}
+.teacher__edit {
+  margin-right: 5px;
+  float: right;
+  visibility: hidden;
+}
+.teacher__cell:hover {
+  .teacher__edit {
+    visibility: visible;
+  }
+}
+.photoWrapper {
+  position: relative;
+}
+.photoImg {
+  width: 120px;
+  height: 120px;
+  float: right;
+  margin-top: 10px;
+}
+.photoError {
+  color: $required;
+  position: absolute;
+  width: 50%;
+  bottom: -100px;
+  right: 45%;
+}
+.wrongData1 {
+  background-color: $required !important;
+  color: white !important;
+  border-color: $required !important;
+}
+.correctData1 {
+  background-color: #00aa00 !important;
+  color: white !important;
+  border-color: #00aa00 !important;
+}
+.teachersForm ::ng-deep input {
+  width: 100% !important;
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #c0c0c0 !important;
+}
+.teachersForm ::ng-deep input:hover {
+  border-bottom-color: #000000 !important;
+}
+.ui-inputgroup {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.teacher-date-of-birth,
+.phone-number {
+  width: 100%;
+}
+.ui-inputgroup-addon {
+  border-radius: 3px;
+  -webkit-transition: all 0.7s ease;
+  -moz-transition: all 0.7s ease;
+  -o-transition: all 0.7s ease;
+  transition: all 0.7s ease;
+  margin-right: 5px;
+}
+.teachersForm input:focus + .ui-inputgroup-addon {
+  background-color: #007ad9 !important;
+  color: white !important;
+  border-color: #007ad9 !important;
+}
+::ng-deep .ui-dialog-content {
+  font-size: 18px !important;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+}
+::ng-deep .pi-ban {
+  font-size: 50px !important;
+  color: $required;
+}
+.teacher__info {
+  margin-right: 3px;
+}
+.caption__wrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -22px;
+}
+.progress-box {
+  height: 6px;
+}
+.p-progress-bar .ui-progressbar-indeterminate {
+  border-radius: 0 !important;
+}
+@media only screen and (max-width: 600px) {
+  .ui-sortable-column:nth-last-child(2),
+  .teacher__cell td.ng-star-inserted:nth-last-child(2) {
+    display: none;
+  }
+}
+
+// Responsive styles
+@media (min-width: 992px) and (max-width: 1280px) {
+  :host ::ng-deep .ui-dialog {
+    width: 100% !important;
+  }
+
+  :host ::ng-deep .ui-datepicker {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  :host ::ng-deep .ui-dialog {
+    width: 100% !important;
+  }
+
+  :host ::ng-deep .ui-datepicker {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  :host ::ng-deep .ui-dialog {
+    width: 100% !important;
+  }
+
+  :host ::ng-deep .ui-datepicker {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .ui-dialog {
+    width: 100% !important;
+  }
+
+  :host ::ng-deep .ui-datepicker {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

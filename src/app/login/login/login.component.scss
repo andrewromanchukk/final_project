@@ -1,0 +1,214 @@
+.picture {
+  background: url('./../../../assets/school-min.jpg') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-position-x: 32%;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin-top: 0;
+  padding: 0;
+}
+
+.grayBox {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: left;
+  align-content: center;
+}
+
+header {
+  width: 100%;
+  margin: auto;
+  padding: 10px;
+  //background-color: #00aa00;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.container {
+  user-select: none;
+  width: 300px;
+  padding: 15px 20px;
+  background-color: rgba(15, 15, 15, 0.75);
+  border-radius: 3px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  order: 2;
+  font-family: 'Philosopher', sans-serif;
+  color: #ffffff;
+  h3 {
+    letter-spacing: 1px;
+  }
+}
+
+.pageTitle {
+  user-select: none;
+  background-color: rgba(15, 15, 15, 0.75);
+  color: #ffffff;
+  border-radius: 3px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  font-family: 'Philosopher', sans-serif;
+  font-size: 32px;
+  text-align: center;
+  margin: auto 0;
+  padding: 15px 20px;
+  order: 1;
+  .schoolName {
+    text-transform: uppercase;
+    font-size: 53px;
+    font-weight: 900;
+  }
+  .pageSubTitle {
+    margin-top: 10px;
+  }
+  img {
+    width: 70px;
+    height: 70px;
+    margin-top: 10px;
+  }
+}
+
+.ui-inputgroup {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.login-input {
+  width: 100% !important;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.login-input:hover {
+  border-bottom-color: #555555 !important;
+}
+
+.login-input:-ms-input-placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+}
+
+.login-input::-ms-input-placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+}
+
+.login-input::-webkit-input-placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+}
+
+.login-input::-moz-placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+}
+
+.login-input::placeholder {
+  color: #ffffff;
+  font-family: 'Philosopher', sans-serif;
+}
+
+.ui-inputgroup-addon {
+  background-color: #ffffff !important;
+  color: #404040 !important;
+  border-radius: 3px;
+  margin-right: 5px;
+  -webkit-transition: all 0.7s ease;
+  -moz-transition: all 0.7s ease;
+  -o-transition: all 0.7s ease;
+  transition: all 0.7s ease;
+}
+.login-input:focus + .ui-inputgroup-addon {
+  background-color: #007ad9 !important;
+  color: white !important;
+  border-color: #007ad9 !important;
+}
+
+.ui-button {
+  display: block;
+  width: 200px;
+  margin: 20px auto;
+  font-family: 'Philosopher', sans-serif;
+}
+h1 {
+  text-align: center;
+  padding-bottom: 30px;
+  font-family: 'Philosopher', sans-serif;
+}
+
+.ui-float-label {
+  margin-top: -5px;
+}
+
+#float-input {
+  display: block;
+  width: 100%;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  font-size: 15px;
+  text-align: center;
+}
+a:hover {
+  color: red;
+}
+.login-error {
+  display: block;
+  font-size: 15px;
+  color: red;
+  width: 230px;
+  text-align: center;
+  margin: 10px auto 0;
+}
+
+.login-input {
+  width: 100%;
+}
+
+@media screen and (max-width: 920px) {
+  @media (orientation: landscape) {
+    header {
+      margin: 5px auto;
+    }
+    h1 {
+      padding-bottom: 0;
+    }
+    .container {
+      padding: 1px 10px;
+    }
+  }
+}
+@media screen and (max-width: 785px) {
+  .pageTitle {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  @media (orientation: landscape) {
+    .container {
+      padding: 0 5px;
+    }
+    h3 {
+      display: none;
+    }
+    .ui-inputgroup {
+      margin-bottom: 20px;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .picture {
+    background-position-x: 45%;
+  }
+}

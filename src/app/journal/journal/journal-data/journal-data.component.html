@@ -1,0 +1,75 @@
+<ng-container *ngIf="isDataRecived === true && journalData.length < 1"><h2>Немає даних!</h2></ng-container>
+<ng-container *ngIf="isDataRecived === true">
+    <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="journalData" [scrollable]="true"
+        [(contextMenuSelection)]="selectedMark" [contextMenu]="contextMenu"
+        scrollHeight="401px" frozenWidth="20rem" [ngStyle]="{'margin-bottom': '0px'}">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [ngStyle]="{'background-color':bgColorForMarkType(col)}" class="journalHeader" (click)="daySelected(col)">
+                        <ng-container *ngIf="(+col.field + 1)">
+                                <div>{{col.header.split(',')[2]}}</div>
+                                <div>{{col.header.split(',')[1]}}</div>
+                                <div class="lessonType">{{col.header.split(',')[0]}}</div>
+                        </ng-container>
+                        <ng-container *ngIf="!(+col.field + 1)">
+                            <div >{{col.header}}</div>
+                        </ng-container>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns"
+                    [style.background-color]="isSelected(rowData,col.field) ? '#bcdfff' : '#fff'" 
+                    (click)="singleClick(rowData,col.field)" 
+                    (dblclick)="doubleClick(rowData,col.field)"  [ngSwitch]="col.field" class="journalDataCell">
+                        <ng-container *ngSwitchCase="'rating'">
+                            <div class="calculations"><span>{{rowData.rating[0] | number:'1.1-2'}}</span>/<span>{{rowData.rating[1] | number:'1.1-2'}}</span></div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'studentFullName'">{{rowData.studentFullName}}</ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <div *ngIf="!isEditMode(rowData, col.field) && rowData.marks[col.field].mark" class="mark" [pTooltip]="rowData.marks[col.field].note" [hideDelay]="200" [pContextMenuRow]="{row:rowData, col:col}">
+                                {{markStudent(rowData, col.field)}}
+                            </div>
+                            <div *ngIf="isEditMode(rowData, col.field)" >
+                                <p-inputMask class="editCell" 
+                                    mask="?9*" autoFocus="true"
+                                    slotChar=""
+                                    autoClear="false"
+                                    characterPattern="[0-9][0-2]"
+                                    unmask="true"
+                                    maxlenght="2" size="2" pInputText 
+                                    [(ngModel)]="rowData.marks[col.field].mark" 
+                                    (onBlur)="markEditExit(rowData, col.field)" 
+                                    #box (keyup.enter)="markEditExit(rowData, col.field)" 
+                                    #box (keyup)="onKeydown($event)"> 
+                                </p-inputMask>
+                            </div>
+                        </ng-container>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</ng-container>
+<p-contextMenu #contextMenu [model]="contextMenuItems"></p-contextMenu>
+<p-dialog
+  header="Доповнення до оцінки"
+  [(visible)]="isDisplayDialogVisable"
+  [responsive]="true"
+  showEffect="fade"
+  [modal]="true"
+  [width]="260"
+  [height]="400"
+  [minWidth]="200"
+  #overlay>
+    <textarea pInputTextarea [(ngModel)]="markDescription"></textarea>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="storeMarkDescription()" label="Зберегти"></button>
+    </p-footer>
+</p-dialog>
+<p-toast [style]="{marginTop: '80px'}" position="top-center" key="error"></p-toast>

@@ -1,0 +1,42 @@
+<div class="subjects" *ngFor="let subj of daySubjectsList; let i = index">
+  <span>{{ i + 1 }}</span>
+  <p-dropdown
+    [options]="subjects"
+    [(ngModel)]="daySubjectsList[i].subjectId"
+    [optionLabel]="label"
+    (onChange)="addSubject($event, daySubjectsList, i)"
+    placeholder="Виберіть предмет"
+    [ngModelOptions]="{ standalone: true }"
+    [style]="{ width: '180px' }"
+  >
+  </p-dropdown>
+  <span *ngIf="daySubjectsList[i].secondSubject !== undefined">
+    <p-dropdown
+      [options]="subjects"
+      [(ngModel)]="daySubjectsList[i].secondSubject.subjectId"
+      [optionLabel]="label"
+      (onChange)="changeSecondSubject($event, daySubjectsList, i)"
+      placeholder="Виберіть предмет"
+      [ngModelOptions]="{ standalone: true }"
+      [style]="{ width: '180px' }"
+    >
+    </p-dropdown>
+  </span>
+  <button
+    class="trash"
+    pButton
+    type="button"
+    (click)="delSubject($event, daySubjectsList, i)"
+  >
+    <i class="far fa-trash-alt"></i>
+  </button>
+  <button
+    onclick="this.style.display='none'"
+    class="plus"
+    pButton
+    type="button"
+    (click)="addSecondSubject($event, daySubjectsList, i)"
+  >
+    <i class="fas fa-plus"></i>
+  </button>
+</div>

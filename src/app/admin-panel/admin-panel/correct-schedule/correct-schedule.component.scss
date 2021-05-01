@@ -1,0 +1,108 @@
+//list of classes and download button
+.groups-list,
+.download-button {
+  margin: 1%;
+  margin-bottom: 2%;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-subjects-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.right-container {
+  margin-right: 1%;
+  width: 48%;
+}
+
+.left-container {
+  width: 48%;
+  margin-left: 1%;
+}
+
+:host ::ng-deep p-calendar {
+  margin-right: 3%;
+  margin-bottom: 2%;
+}
+
+h3 {
+  text-align: center;
+}
+
+// submit button
+p-footer .submit-subject-button {
+  width: 140px;
+  height: 38px;
+  margin-top: 2%;
+  margin-left: 1.5%;
+  margin-bottom: 5%;
+}
+
+:host ::ng-deep p-footer .submit-subject-button .ui-button-icon-left {
+  margin-left: 17px;
+}
+
+/* Small and medium devices (phones, landscape tablets, 768px and down) */
+@media only screen and (max-width: 768px) {
+  .flex-container,
+  .flex-subjects-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right-container {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .left-container {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  :host p-calendar,
+  .groups-list,
+  .download-button {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  p-footer .submit-subject-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// calendar in small and medium devices (phones, 600px and down)
+@media screen and (max-width: 600px) {
+  :host ::ng-deep .ui-calendar {
+    position: static;
+  }
+}
+
+// calendar in extra small devices (phones, 320px to 359px)
+@media screen and (min-width: 320px) and (max-width: 359px) {
+  :host ::ng-deep .ui-datepicker {
+    margin-top: 91%;
+  }
+}
+
+// calendar in extra small devices (phones, 360px to 410px)
+@media screen and (min-width: 360px) and (max-width: 410px) {
+  :host ::ng-deep .ui-datepicker {
+    margin-top: 82%;
+  }
+}
+
+// calendar in small and medium devices (phones, 411px to 600px)
+@media screen and (min-width: 411px) and (max-width: 600px) {
+  :host ::ng-deep .ui-datepicker {
+    margin-top: 73%;
+  }
+}

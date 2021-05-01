@@ -1,0 +1,98 @@
+.ui-toolbar-group-left .home {
+  font-size: 22px;
+  vertical-align: middle;
+  margin: 0px 10px -20px 8px;
+}
+
+.ui-toolbar-group-right {
+  font-size: 22px;
+
+  .ui-button {
+    width: fit-content;
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: #8f8f8f;
+    border-color: #8f8f8f;
+  }
+}
+
+.editUserBtn {
+  display: none;
+}
+
+.userButton {
+  float: right;
+}
+
+.userName {
+  float: right;
+  font-size: 14px;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.admin-panel-img {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: 25px;
+  right: 60px;
+}
+
+:host ::ng-deep .ui-toolbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  border-radius: 0;
+}
+
+:host ::ng-deep .ui-toolbar .ui-button {
+  margin-left: 10px;
+  width: 60px;
+}
+
+:host ::ng-deep .ui-toolbar .ui-menuitem {
+  width: 400px;
+}
+
+:host ::ng-deep .ui-toolbar .ui-menuitem-text {
+  padding-left: 30px;
+}
+
+:host ::ng-deep .ui-toolbar .ui-menuitem:nth-child(2) .ui-menuitem-text {
+  font-weight: bold;
+}
+:host ::ng-deep .ui-sidebar {
+  width: 230px;
+  text-align: center;
+  .ui-button {
+    width: 100%;
+    margin: 5px 5px 5px 0px;
+  }
+}
+.sidebar-avatar {
+  width: 200px;
+  height: 200px;
+}
+@media screen and (max-width: 920px) {
+  @media (orientation: landscape) {
+    :host ::ng-deep .ui-sidebar {
+      width: auto;
+      padding: 5px;
+    }
+    .sidebar-avatar {
+      width: 200px;
+      height: 200px;
+    }
+    h3 {
+      margin: 0;
+    }
+    h1 {
+      margin: 0;
+    }
+  }
+}

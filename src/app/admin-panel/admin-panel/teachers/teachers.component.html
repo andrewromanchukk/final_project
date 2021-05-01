@@ -1,0 +1,362 @@
+<div class="progress-box">
+  <p-progressBar
+    class="p-progress-bar"
+    mode="indeterminate"
+    [style]="{ height: '6px' }"
+    [hidden]="!loading"
+  ></p-progressBar>
+</div>
+<p-table
+  [columns]="columns"
+  [value]="teachers"
+  [(selection)]="selectedTeacher"
+  [paginator]="false"
+	[responsive]="true"
+>
+  <ng-template pTemplate="caption"
+    >Список вчителів
+    <div class="caption__wrap">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-print"
+        class="teacher__info"
+        (click)="print()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-users"
+        class="teacher__info"
+        (click)="confirmCheck = false"
+        (click)="sendData()"
+      ></button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{ col.header }}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData" class="teacher__cell">
+      <td *ngFor="let col of columns">
+        {{ rowData[col.field] }}
+        <button
+          pButton
+          type="button"
+          *ngIf="col.field == 'dateOfBirth'"
+          icon="pi pi-times"
+          class="ui-button-danger teacher__edit"
+          iconPos="left"
+          (click)="confirmCheck = true"
+          (click)="confirm(rowData)"
+        ></button>
+        <button
+          class="teacher__edit"
+          *ngIf="col.field == 'dateOfBirth'"
+          pButton
+          type="button"
+          (click)="onRowSelect(rowData)"
+          icon="pi pi-pencil"
+          iconPos="left"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-plus"
+        (click)="showDialogToAdd()"
+        label="Додати вчителя"
+      ></button>
+    </div>
+  </ng-template>
+</p-table>
+<p-dialog
+  header="Інформація про вчителя"
+  [(visible)]="displayDialog"
+  [responsive]="true"
+  showEffect="fade"
+  [modal]="true"
+  [width]="700"
+  [height]="600"
+  [minWidth]="200"
+  #overlay
+>
+  <form #teacherForm="ngForm" class="teachersForm">
+    <div class="p-grid" *ngIf="teacher">
+      <p-fieldset legend="Обов'язкові поля" class="mainInfo p-col-12 p-md-6">
+        <div class="ui-inputgroup">
+          <input
+            pInputText
+            placeholder="Прізвище *"
+            id="float-input-lastname"
+            [class.is-invalid]="lastname.invalid && lastname.touched"
+            #lastname="ngModel"
+            [(ngModel)]="teacher.lastname"
+            minlength="3"
+            maxlength="20"
+            required
+            name="lastname"
+            pattern="[А-ЯІЇЄҐ]([А-ЯІЇЄҐ]*[а-яіїєґ]*[\' -]?)+"
+          />
+          <span
+            class="ui-inputgroup-addon"
+            [class.wrongData1]="lastname.invalid && lastname.touched"
+            [class.correctData1]="lastname.valid && lastname.touched"
+            ><i class="fas fa-user"></i
+          ></span>
+        </div>
+        <span
+          [class.d-none]="lastname.valid || lastname.untouched"
+          class="requiredMessage"
+          >Некоректне прізвище</span
+        >
+        <br />
+        <div class="ui-inputgroup">
+          <input
+            pInputText
+            placeholder="Ім'я *"
+            [class.is-invalid]="firstname.invalid && firstname.touched"
+            #firstname="ngModel"
+            id="float-input-firstname"
+            [(ngModel)]="teacher.firstname"
+            required
+            minlength="3"
+            maxlength="20"
+            name="firstname"
+            pattern="[А-ЯІЇЄҐ]([А-ЯІЇЄҐ]*[а-яіїєґ]*[\' -]?)+"
+          />
+          <span
+            class="ui-inputgroup-addon"
+            [class.wrongData1]="firstname.invalid && firstname.touched"
+            [class.correctData1]="firstname.valid && firstname.touched"
+            ><i class="fas fa-user"></i
+          ></span>
+        </div>
+        <span
+          [class.d-none]="firstname.valid || firstname.untouched"
+          class="requiredMessage"
+          >Некоректне ім'я</span
+        >
+        <br />
+        <div class="ui-inputgroup">
+          <input
+            pInputText
+            placeholder="По батькові *"
+            id="patronymic"
+            [class.is-invalid]="patronymic.invalid && patronymic.touched"
+            #patronymic="ngModel"
+            [(ngModel)]="teacher.patronymic"
+            minlength="3"
+            maxlength="20"
+            required
+            name="patronymic"
+            pattern="[А-ЯІЇЄҐ]([А-ЯІЇЄҐ]*[а-яіїєґ]*[\' -]?)+"
+          />
+          <span
+            class="ui-inputgroup-addon"
+            [class.wrongData1]="patronymic.invalid && patronymic.touched"
+            [class.correctData1]="patronymic.valid && patronymic.touched"
+            ><i class="fas fa-user"></i
+          ></span>
+        </div>
+        <span
+          [class.d-none]="patronymic.valid || patronymic.untouched"
+          class="requiredMessage"
+          >Некоректне по батькові</span
+        >
+        <br />
+        <div class="ui-inputgroup">
+          <p-calendar
+            id="float-input-date"
+            class="teacher-date-of-birth"
+            placeholder="Дата народження *"
+            [(ngModel)]="teacher.dateOfBirth"
+            name="dateOfBirth"
+            #dateOfBirth="ngModel"
+            [class.is-invalid]="dateOfBirth.invalid && dateOfBirth.touched"
+            [readonlyInput]="true"
+            [locale]="ua"
+            required
+            dateFormat="yy-mm-dd"
+            [yearNavigator]="true"
+            [monthNavigator]="true"
+            yearRange="1940:2017"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+            [appendTo]="overlay"
+          ></p-calendar>
+          <span
+            class="ui-inputgroup-addon"
+            [class.wrongData1]="dateOfBirth.invalid && dateOfBirth.touched"
+            [class.correctData1]="dateOfBirth.valid && dateOfBirth.touched"
+            ><i class="fas fa-calendar-alt"></i
+          ></span>
+        </div>
+        <span
+          [class.d-none]="dateOfBirth.valid || dateOfBirth.untouched"
+          class="requiredMessage"
+          >Некоректна дата народження</span
+        >
+      </p-fieldset>
+      <p-fieldset
+        legend="Додаткова інформація"
+        [toggleable]="true"
+        [collapsed]="true"
+        class="p-col-12 p-md-6"
+      >
+        <div class="ui-inputgroup">
+          <input
+            pInputText
+            placeholder="Логін"
+            id="float-input-login"
+            [(ngModel)]="teacher.login"
+            name="login"
+            [class.is-invalid]="login.invalid && login.touched"
+            #login="ngModel"
+            minlength="5"
+            maxlength="20"
+            (keyup)="checkLogin($event)"
+          />
+          <span class="ui-inputgroup-addon"><i class="fas fa-key"></i></span>
+        </div>
+        <span
+          [class.d-none]="login.valid || login.untouched"
+          class="requiredMessage"
+          >Некоректний логін (не менше 5 символів)</span
+        >
+        <span *ngIf="loginStatus" class="requiredMessage">{{
+          loginStatus
+        }}</span>
+        <br />
+        <div class="ui-inputgroup">
+          <input
+            pInputText
+            placeholder="Електронна адреса"
+            id="float-input-email"
+            [(ngModel)]="teacher.email"
+            type="email"
+            #email="ngModel"
+            [class.is-invalid]="email.invalid && email.touched"
+            name="email"
+            pattern="^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$"
+          />
+          <span class="ui-inputgroup-addon"
+            ><i class="fas fa-envelope"></i
+          ></span>
+        </div>
+        <span
+          [class.d-none]="email.valid || email.untouched"
+          class="requiredMessage"
+          >Некоректна електронна адреса</span
+        >
+        <br />
+        <div class="ui-inputgroup">
+          <p-inputMask
+            placeholder="Номер телефону"
+            class="phone-number"
+            [(ngModel)]="teacher.phone"
+            id="tel"
+            mask="999-999-9999"
+            name="phone"
+            [style]="{ width: '100%' }"
+          ></p-inputMask>
+          <span class="ui-inputgroup-addon"><i class="fas fa-phone"></i></span>
+        </div>
+        <br />
+        <div class="ui-inputgroup photoWrapper">
+          <input
+            pInputText
+            id="photo"
+            type="file"
+            #Image
+            accept="image/*"
+            (change)="handlerFileInput($event.target.files)"
+            name="photo"
+          />
+          <span class="ui-inputgroup-addon"><i class="fas fa-upload"></i></span>
+          <span class="photoError">{{ photoData }}</span>
+        </div>
+        <img
+          *ngIf="teacher.avatar != null"
+          [src]="teacher.avatar"
+          alt="Photo"
+          class="photoImg"
+        />
+        <img
+          *ngIf="teacher.avatar == null"
+          [src]="imageUrl"
+          alt="Photo"
+          class="photoImg"
+        />
+      </p-fieldset>
+    </div>
+  </form>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button
+        *ngIf="newTeacher"
+        type="button"
+        pButton
+        icon="pi pi-check"
+        (click)="create()"
+        label="Зберегти"
+        [disabled]="teacherForm.invalid || loginStatus"
+      ></button>
+      <button
+        *ngIf="!newTeacher"
+        type="button"
+        pButton
+        icon="pi pi-check"
+        (click)="save()"
+        label="Зберегти"
+        [disabled]="teacherForm.invalid || loginStatus"
+      ></button>
+    </div>
+  </p-footer>
+</p-dialog>
+<p-confirmDialog #cd header="Підтвердження">
+  <p-footer>
+    <button
+      *ngIf="confirmCheck"
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Скасувати"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      *ngIf="!confirmCheck"
+      type="button"
+      pButton
+      icon="pi pi-times"
+      label="Скасувати"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      *ngIf="confirmCheck"
+      type="button"
+      pButton
+      icon="pi pi-trash"
+      label="Видалити"
+      class="ui-button-danger"
+      (click)="cd.accept()"
+    ></button>
+    <button
+      *ngIf="!confirmCheck"
+      type="button"
+      pButton
+      icon="pi pi-envelope"
+      label="Відправити"
+      (click)="cd.accept()"
+    ></button>
+  </p-footer>
+</p-confirmDialog>

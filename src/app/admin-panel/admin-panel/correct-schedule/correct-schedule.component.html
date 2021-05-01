@@ -1,0 +1,117 @@
+<div class="flex-container">
+  <p-dropdown
+    class="groups-list"
+    name="classes"
+    [options]="classes"
+    [(ngModel)]="selectedGroupId"
+    (onChange)="onClassSelected($event)"
+    placeholder="Виберіть клас"
+    #class="ngModel"
+  >
+  </p-dropdown>
+
+  <p-button
+    class="download-button"
+    label="Завантажити розклад"
+    (onClick)="getSchedule()"
+    [disabled]="!selectedGroupId"
+  ></p-button>
+</div>
+
+<h3 *ngIf="condition && schedule.mondaySubjects.length > 0">
+  Розклад уроків для учнів {{ selectedGroup }} класу
+</h3>
+
+<div class="flex-container">
+  <p-calendar
+    *ngIf="condition && schedule.mondaySubjects.length > 0"
+    class="form-control"
+    [(ngModel)]="startOfSemester"
+    [minDate]="minDateValue"
+    [maxDate]="maxDateValue"
+    [placeholder]="'Дата закінчення семестру'"
+    [locale]="ua"
+    dateFormat="dd.mm.yy"
+    [showIcon]="true"
+    name="fromDate"
+    #fromDate="ngModel"
+  ></p-calendar>
+
+  <p-calendar
+    *ngIf="condition && schedule.mondaySubjects.length > 0"
+    class="form-control"
+    [(ngModel)]="endOfSemester"
+    [minDate]="minDateValue"
+    [maxDate]="maxDateValue"
+    [placeholder]="'Дата закінчення семестру'"
+    [locale]="ua"
+    dateFormat="dd.mm.yy"
+    [showIcon]="true"
+    name="toDate"
+    #toDate="ngModel"
+  ></p-calendar>
+</div>
+
+<div class="flex-subjects-container">
+  <div class="left-container">
+    <app-day-schedule
+      [daySchedule]="schedule.mondaySubjects"
+      [days]="days[0]"
+      [condition]="condition"
+      [schedule]="schedule"
+      [(isButtonDisabled)]="isButtonDisabled"
+    ></app-day-schedule>
+    <app-day-schedule
+      [daySchedule]="schedule.tuesdaySubjects"
+      [days]="days[1]"
+      [condition]="condition"
+      [schedule]="schedule"
+      [(isButtonDisabled)]="isButtonDisabled"
+    ></app-day-schedule>
+    <app-day-schedule
+      [daySchedule]="schedule.wednesdaySubjects"
+      [days]="days[2]"
+      [condition]="condition"
+      [schedule]="schedule"
+      [(isButtonDisabled)]="isButtonDisabled"
+    ></app-day-schedule>
+  </div>
+
+  <div class="right-container">
+    <app-day-schedule
+      [daySchedule]="schedule.thursdaySubjects"
+      [days]="days[3]"
+      [condition]="condition"
+      [schedule]="schedule"
+      [(isButtonDisabled)]="isButtonDisabled"
+    ></app-day-schedule>
+    <app-day-schedule
+      [daySchedule]="schedule.fridaySubjects"
+      [days]="days[4]"
+      [condition]="condition"
+      [schedule]="schedule"
+      [(isButtonDisabled)]="isButtonDisabled"
+    ></app-day-schedule>
+    <app-day-schedule
+      [daySchedule]="schedule.saturdaySubjects"
+      [days]="days[5]"
+      [condition]="condition"
+      [schedule]="schedule"
+      [(isButtonDisabled)]="isButtonDisabled"
+    ></app-day-schedule>
+  </div>
+</div>
+
+<p-footer>
+  <button
+    pButton
+    *ngIf="condition && schedule.mondaySubjects.length > 0"
+    class="submit-subject-button"
+    type="submit"
+    pButton
+    icon="pi pi-check"
+    [disabled]="isButtonDisabled"
+    (click)="submitForm()"
+    label="Зберегти"
+  ></button>
+</p-footer>

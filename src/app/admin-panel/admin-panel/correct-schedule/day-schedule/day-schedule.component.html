@@ -1,0 +1,67 @@
+<p-table *ngIf="condition && daySchedule.length > 0" [value]="daySchedule">
+  <ng-template pTemplate="caption">{{ days }}</ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width:8em">Номер уроку</th>
+      <th>Предмет</th>
+      <th style="width:8em"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+    <tr class="class-table-row">
+      <td pEditableColumn>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <p-spinner
+              pInputNumber
+              size="1"
+              [min]="1"
+              [max]="9"
+              [(ngModel)]="rowData.lessonNumber"
+              required
+            ></p-spinner>
+          </ng-template>
+          <ng-template pTemplate="output">
+            {{ rowData.lessonNumber }}
+          </ng-template>
+        </p-cellEditor>
+      </td>
+      <td pEditableColumn>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <p-dropdown
+              [options]="subjects"
+              [(ngModel)]="rowData.subject"
+              placeholder="Виберіть предмет"
+              [style]="{ width: '100%' }"
+              (onChange)="onSubjectChange($event, rowData, daySchedule)"
+              [autoDisplayFirst]="false"
+            ></p-dropdown>
+          </ng-template>
+          <ng-template pTemplate="output">
+            {{ rowData.subjectName }}
+          </ng-template>
+        </p-cellEditor>
+      </td>
+      <td style="text-align:center">
+        <button
+          *ngIf="daySchedule.length > 1"
+          pButton
+          type="button"
+          icon="far fa-trash-alt"
+          class="trash"
+          style="margin-right: .5em"
+          (click)="onRowDelete(rowData, daySchedule)"
+        ></button>
+        <button
+          *ngIf="rowData.lessonNumber && rowData.subjectName"
+          pButton
+          type="button"
+          icon="fas fa-plus"
+          class="plus"
+          (click)="onRowAdd(rowData, daySchedule)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

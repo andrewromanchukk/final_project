@@ -1,0 +1,17 @@
+<div class="p-grid p-align-center">
+  <div class="p-col">
+    <h1>{{title}}</h1>
+    <form (ngSubmit)="postAttachTeacher()" #AttachTeacherForm="ngForm">
+      <p-dropdown name="teacher" [options]="teachers" [(ngModel)]="teacher" optionLabel="fullname" [style]="{'width':'250px'}"
+        placeholder="Виберіть вчителя" [showClear]="true" [filter]="true" required>
+      </p-dropdown>
+      <p-dropdown name="subject" [options]="subjects" [(ngModel)]="subject" optionLabel="subjectName" [style]="{'width':'250px'}"
+        placeholder="Виберіть предмет" [showClear]="true" [filter]="true" required>
+      </p-dropdown>
+      <p-dropdown name="group" [options]="classes" [(ngModel)]="group" optionLabel="className" [style]="{'width':'250px'}"
+        placeholder="Виберіть клас" [showClear]="true" [filter]="true" required>
+      </p-dropdown>
+      <button pButton [disabled]="!AttachTeacherForm.valid" type="submit" label="Зберегти" icon="fa fa-check" iconPos="left"></button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<ng-container *ngIf="activeHomeTaskFile">
+  <h3 class="text-center">
+    <span>Домашнє завдання для обраної дати ({{activeMark.dateMark}})</span>
+  </h3>
+  <div class="single-hometask-container">
+    <div class="hometask-description" *ngIf="!(activeHomeTaskFile.homework === '')">
+      <input type="text"
+             class="hometask-description-input"
+             placeholder="Додати опис"
+             value="{{activeHomeTaskFile.homework}}"
+             (change)="changeHometaskDescription($event)" >
+    </div>
+    <div class="hometask-description" *ngIf="(activeHomeTaskFile.homework === '')">
+      <input type="text"
+             class="hometask-description-input"
+             placeholder="Додати опис"
+             (change)="changeHometaskDescription($event)">
+    </div>
+    <div>
+      <a *ngIf="(activeHomeTaskFile.fileName === null)">Файл не завантажено</a>
+      <a *ngIf="!(activeHomeTaskFile.fileName === null)"
+         (click)="openSingleHomeTask(activeHomeTaskFile)">
+        {{activeHomeTaskFile.fileName}}
+      </a>
+    </div>
+    <div>
+      <input
+        class="file"
+        pInputText
+        id="photo"
+        type="file"
+        #Image
+        accept="image/*"
+        (change)="handlerFileInput($event.target.files)"
+        name="photo"
+      />
+    </div>
+    <div>
+      <p-button (onClick)="sendHomeTaskFile(uploadHomeTaskFile)"
+                label="Зберегти зміни">
+      </p-button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="activeJournal">
+  <h3 class="text-center">
+    <span>Домашнє завдання для </span>
+    <span *ngIf="activeJournal">
+      {{activeJournal ? activeJournal.className + ' класу з предмету "' + activeJournal.subjectName + '"' : 'Відсутні дані'}}
+    </span>
+  </h3>
+  <p-dataView #dv
+              [value]="hometasksToDisplay"
+              [paginator]="true"
+              [rows]="10"
+              paginatorPosition="top"
+              filterBy="homework"
+              [sortField]="sortField"
+              emptyMessage="Домашні завдання відсутні"
+              [sortOrder]="sortOrder">
+    <p-header>
+      <div class="ui-helper-clearfix">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-4 order-selector">
+            <p-dropdown [options]="sortOptions"
+                        [(ngModel)]="sortKey"
+                        placeholder="Сортування:"
+                        (onChange)="onSortChange($event)"
+                        [autoWidth]="false">
+            </p-dropdown>
+          </div>
+          <div class="ui-g-6 ui-md-4 filter-container">
+            <div>
+              <input class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                     type="search"
+                     pInputText
+                     placeholder="Шукати по опису"
+                     (keyup)="dv.filter($event.target.value)">
+            </div>
+          </div>
+          <div class="ui-g-6 ui-md-4 past-task-enabler">
+            <p-checkbox [(ngModel)]="showPastTasks"
+                        (onChange)="onPastTasksChange()"
+                        binary="true"></p-checkbox>
+            <span>Відображати минулі домашні завдання</span>
+          </div>
+        </div>
+      </div>
+    </p-header>
+    <ng-template let-hometask pTemplate="listItem">
+      <div class="ui-g hometask-row">
+        <div class="ui-g-12 ui-md-3">
+          {{hometask.date}}
+        </div>
+        <div class="ui-g-12 ui-md-6">
+          {{hometask.homework}}
+        </div>
+        <div class="ui-g-12 ui-md-3">
+          <p-button *ngIf="hometask.fileName" icon="pi pi-file"
+                    (onClick)="openHomeTask(hometask.idLesson)">
+          </p-button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</ng-container>
